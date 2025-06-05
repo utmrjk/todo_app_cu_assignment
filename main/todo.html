@@ -1,0 +1,155 @@
+<!-- Everything is working fine (final version --- v3 ) -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>My To-Do</title>
+	<link rel="stylesheet" href="../style/todo4.css">
+</head>
+<link rel="manifest" href="/manifest.json">
+
+<body>
+	  <h1 id="head">My To-Do</h1>
+	 <ul id="list">
+	 	
+         
+
+	 </ul>
+
+     <input type="text" id="task" placeholder="add Your task here"> <br><br><br><br>
+	 <button onclick="addTask()" id="addBtn"> + </button> &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+	 <button onclick="removeTask()" id="removeBtn">- </button> <br><br>
+	 
+
+	 <script>
+    
+          showItem()
+
+	 	function removeTask()
+	 	{
+	 			 var list = document.getElementById('list')
+	 	 		 for(let i=0;i<list.childElementCount;i++)
+	 	 		 {
+	 	  			if(list.children[i].children[0].checked===true)
+	 	  			{
+	 	  				// console.log(list.children[i])
+	 	  				// list.removeChild(list.children[i])
+	 	  				
+	 	  				var tasksObj=JSON.parse(localStorage.getItem('tasksObj'))
+	 	  				for(let [key,value] of Object.entries(tasksObj) )
+	 	  				{
+	 	  					if(list.children[i].children[1].innerText===value)
+	 	  					{
+
+	 	  						delete tasksObj[key]
+	 	  					}
+	 	  				}
+                        localStorage.setItem('tasksObj',JSON.stringify(tasksObj))
+                        window.location.reload()
+	 	  			}
+	 	  		 } 
+	 	}
+
+	 	function addTask()
+	 	{
+	 			
+	 			
+
+ 			let task = document.getElementById('task').value
+
+            if(task==='')
+            {
+            	alert('Please enter a task first')
+            }
+            else
+            {
+
+			 			let dynamicLi = document.createElement('li')  //create li at runtime
+
+			            let dynamicCheckbox=document.createElement('input') //create checkbox at runtime
+			            dynamicCheckbox.type='checkbox'
+
+
+			            let dynamicLabel = document.createElement('label') //create label at run time
+			            dynamicLabel.textContent = task
+
+			 			var list = document.getElementById('list')
+
+			 			dynamicLi.appendChild(dynamicCheckbox)  //append checkbox and label into the li
+			 			dynamicLi.appendChild(dynamicLabel)
+			 			
+			 			list.appendChild(dynamicLi) //finally append li into the list
+			           
+			          
+			           if(localStorage.getItem('tasksObj')===null)
+			           {
+			           		var tasksObj = {}
+			           		tasksObj.task1=task
+			           		localStorage.setItem('tasksObj',JSON.stringify(tasksObj)) //converting object into string
+			           }
+			           else
+			           {
+
+			           	   var tasksObj=JSON.parse(localStorage.getItem('tasksObj'))
+			           	   var count=Object.keys(tasksObj).length+1 // counting total nums of tasks
+			           	   var taskKey = 'task'+count
+			           	   tasksObj[taskKey]=task
+			           	   localStorage.setItem('tasksObj',JSON.stringify(tasksObj))
+			           
+			           }
+			           document.getElementById('task').value=''
+			       }
+
+	 		}
+
+
+	 	function showItem()
+	 	{
+	 		
+	 	 	 var tasksObj=JSON.parse(localStorage.getItem('tasksObj'))
+	 	 	 Object.values(tasksObj).forEach((value,key)=>{
+
+	 	 	 			let dynamicLi = document.createElement('li')  //create li at runtime
+
+			            let dynamicCheckbox=document.createElement('input') //create checkbox at runtime
+			            dynamicCheckbox.type='checkbox'
+
+
+			            let dynamicLabel = document.createElement('label') //create label at run time
+			            dynamicLabel.textContent = value
+
+	 					var list = document.getElementById('list')
+
+			 			dynamicLi.appendChild(dynamicCheckbox)  //append checkbox and label into the li
+			 			dynamicLi.appendChild(dynamicLabel)
+	 			
+	 					list.appendChild(dynamicLi) //finally append li into the list
+	 	 	 })
+
+
+	 	 	
+	 	}
+
+	 	
+	 </script>
+	 	
+</body>
+
+				<!-- ..................for adding into home screen.................. -->
+				<script>
+					if ('serviceWorker' in navigator) {
+					   console.log("Will the service worker register?");
+					   navigator.serviceWorker.register('service-worker.js')
+						 .then(function(reg){
+						   console.log("Yes, it did.");
+						}).catch(function(err) {
+						   console.log("No it didn't. This happened:", err)
+					   });
+					}
+	   
+			</script>
+			<!-- .............................................................. -->
+
+
+</html>

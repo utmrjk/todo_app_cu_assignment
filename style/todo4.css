@@ -1,0 +1,61 @@
+body{
+	background-color: #24252a;
+	color:#fff;
+	text-align: center;
+}
+
+#head{
+	font-family: 'Times New Roman',helvetica,serif;
+	font-size:5vh;
+}
+
+#task{
+	height: 5vh;
+	width:80%;
+	border:1px solid #a1a1a1;
+	background-color: transparent;
+	color:#fff;
+	font-size: 3vh;
+	padding-left:10px;
+}
+#task:focus{
+     background-color: #22313f;
+}
+
+#addBtn , #removeBtn{
+	height:6vh;
+	width:6vh;
+	border:2px solid #fff;
+	border-radius:50%;
+	font-size:5vh;
+	background-color: transparent;
+	color:#fff;
+}
+#addBtn:active , #removeBtn:active{
+	background-color: #22313f;
+	height:5vh;
+	width:5vh;
+	box-shadow: 2px 2px 5px 5px #000;
+	transition: 0.2s;
+	outline: none;
+}
+
+
+#list{
+	list-style: none;
+	text-align: left;
+	padding:20px 20px;
+}
+
+li{
+	font-size: 3.5vh;
+	margin-left:2em;
+	font-family: 'Times New Roman',helvetica,serif;
+}
+
+input[type='checkbox']{
+	height: 3vh;
+	width:3vh;
+	margin:5px;
+	transition: 2s;
+}
